@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Хайрын Захидал 💗</title>
+  <link href="https://fonts.googleapis.com/css2?family=Courgette&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow-x: hidden;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* ===== LETTER SECTION ===== */
+    #letterSection {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-template-rows: repeat(12, 1fr);
+      min-height: 100vh;
+      width: 100%;
+      background-color: #121212;
+      position: relative;
+      transition: opacity 0.8s ease;
+    }
+
+    #letterSection.fade-out {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .container {
+      grid-row: 2/3;
+      justify-self: center;
+      align-self: center;
+      grid-column: 5/9;
+      text-align: center;
+      font-family: "Courgette";
+      color: burlywood;
+      text-shadow: 0 0 6px peru;
+    }
+
+    .letter_ct {
+      width: 400px;
+      height: 300px;
+      grid-row: 4/7;
+      grid-column: 5/9;
+      display: flex;
+      align-items: center;
+      text-align: center;
+      margin: auto;
+    }
+
+    .txt {
+      grid-row: 9/11;
+      grid-column: 5/9;
+      text-align: center;
+      font-size: large;
+      font-family: "Courgette";
+      color: burlywood;
+      text-shadow: 0 0 6px peru;
+    }
+
+    label {
+      position: absolute;
+    }
+
+    .letter {
+      grid: inherit;
+      width: 400px;
+      height: 300px;
+      background-color: pink;
+      border: 4px solid palevioletred;
+      display: grid;
+      transition: all 0.3s ease-in-out;
+      position: absolute;
+      border-radius: 0 0 7px 7px;
+    }
+
+    .main {
+      box-shadow: 0 10px 30px purple;
+    }
+
+    .note {
+      z-index: 1;
+      justify-content: center;
+      position: absolute;
+      width: 390px;
+      height: 270px;
+      margin: 10px 9px;
+      background-color: whitesmoke;
+      transform: translateY(0px);
+      transition-duration: 0.3s;
+    }
+
+    .note p {
+      margin: 15px 30px;
+      font-size: 14px;
+      color: purple;
+      font-family: "Courgette";
+    }
+
+    .note .int {
+      text-align: left;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .note .sign {
+      text-align: right;
+      font-style: italic;
+    }
+
+    .front {
+      position: absolute;
+      z-index: 2;
+      width: 401px;
+      height: 300px;
+      background-color: rgb(252, 157, 188);
+      margin: 4px;
+      clip-path: polygon(50% 45%, 100% 0, 100% 100%, 0 100%, 0 0);
+    }
+
+    .flap-bg {
+      z-index: 2;
+      background-color: palevioletred;
+      margin-top: 4px;
+      clip-path: polygon(0% 0%, 100% 0%, 100% 1%, 50% 56%, 0 1%);
+      transform: rotateX(0deg);
+      transition-duration: 0.3s ease-in-out;
+    }
+
+    .flap {
+      z-index: 2;
+      margin-left: 3px;
+      background-color: rgb(255, 163, 179);
+      border: unset;
+      clip-path: polygon(0 0, 100% 0, 50% 55%);
+      transform: rotateX(0deg);
+      transition-duration: 0.3s ease-in-out;
+    }
+
+    .heart {
+      position: absolute;
+      z-index: 4;
+      cursor: pointer;
+      height: 170px;
+      width: 200px;
+      scale: 30%;
+      margin: 70px 102px;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 100px;
+      height: 160px;
+      background-color: rgb(178, 34, 106);
+    }
+
+    .heart::before {
+      left: 100px;
+      transform-origin: 0 100%;
+      transform: rotate(-45deg);
+      border-radius: 50px 50px 0 0;
+    }
+
+    .heart::after {
+      right: 100px;
+      transform-origin: 100% 100%;
+      transform: rotate(45deg);
+      border-radius: 50px 50px 0 0;
+    }
+
+    #check {
+      display: none;
+    }
+
+    input:not(:checked) ~ label .flap {
+      transform-origin: top;
+      transform: rotateX(0deg);
+      transition: 0.3s ease-in-out;
+      transition-delay: 0.3s;
+    }
+
+    input:not(:checked) ~ label .flap-bg {
+      transform-origin: top;
+      transform: rotateX(0deg);
+      transition: 0.3s ease-in-out;
+      transition-delay: 0.3s;
+    }
+
+    input:not(:checked) ~ label .heart {
+      transform-origin: center 70%;
+      transform: translateY(0px) rotate(0deg);
+      transition-delay: 0.6s;
+    }
+
+    input:checked ~ label .flap {
+      transform: rotateX(-180deg) translateY(-4px);
+      transition: 0.3s ease-in-out;
+      transition-delay: 0.3s;
+    }
+
+    input:checked ~ label .flap-bg {
+      transform: rotateX(-180deg);
+      transition: 0.3s ease-in-out;
+      transition-delay: 0.3s;
+    }
+
+    input:checked ~ label .flap,
+    input:checked ~ label .flap-bg {
+      transform-origin: top;
+      transition: transform 0.3s 0.4s, z-index 0s 0.6s;
+      z-index: 0;
+    }
+
+    input:checked ~ label .heart {
+      transform-origin: center 70%;
+      transform: translateX(-60px) rotate(-70deg);
+      transition-duration: 0.3s;
+    }
+
+    input:checked ~ label .note {
+      transform: translateY(-170px);
+      transition-delay: 0.8s;
+    }
+
+    /* ===== STORY SECTION ===== */
+    #storySection {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
+      perspective: 1600px;
+    }
+
+    #storySection.active {
+      opacity: 1;
+      visibility: visible;
+      z-index: 10;
+    }
+
+    .bg {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(135deg, #ff9ecb, #ff6cab, #ff2f92, #ff6cab, #ffa8d5);
+      background-size: 400% 400%;
+      animation: bgMove 15s ease infinite;
+      z-index: -3;
+    }
+
+    @keyframes bgMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    #hearts, #confetti {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -2;
+    }
+
+    .phone {
+      width: 420px;
+      max-width: 90vw;
+      min-height: 600px;
+      border-radius: 38px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(30px);
+      box-shadow: 0 70px 180px rgba(0, 0, 0, 0.4);
+      transition: transform 0.15s linear;
+      position: relative;
+      margin: 0 auto;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .intro {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #ff2f92, #ff6cab);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      font-weight: 700;
+      z-index: 5;
+      animation: introFade 3s forwards;
+    }
+
+    .intro-emoji {
+      font-size: 60px;
+      margin-bottom: 20px;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    @keyframes introFade {
+      0% { opacity: 1; }
+      85% { opacity: 1; }
+      100% { opacity: 0; visibility: hidden; }
+    }
+
+    .scene {
+      height: 100%;
+      min-height: 600px;
+      padding: 40px 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 25px;
+      animation: sceneIn 0.8s ease;
+    }
+
+    @keyframes sceneIn {
+      from { 
+        opacity: 0; 
+        transform: translateY(40px) scale(0.95); 
+      }
+      to { 
+        opacity: 1; 
+        transform: translateY(0) scale(1); 
+      }
+    }
+
+    .card {
+      background: linear-gradient(135deg, #fff 0%, #ffe8f5 100%);
+      padding: 35px 28px;
+      border-radius: 26px;
+      box-shadow: 0 20px 60px rgba(255, 47, 146, 0.2);
+      font-size: 19px;
+      line-height: 1.7;
+      text-align: center;
+      color: #2d2d2d;
+      font-weight: 500;
+      border: 2px solid rgba(255, 108, 171, 0.15);
+    }
+
+    .card-emoji {
+      font-size: 48px;
+      margin-bottom: 15px;
+      display: block;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .btn {
+      padding: 18px 24px;
+      border: none;
+      border-radius: 24px;
+      background: linear-gradient(135deg, #ff2f92, #ff6cab);
+      color: white;
+      font-weight: 700;
+      font-size: 17px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 30px rgba(255, 47, 146, 0.4);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.5s;
+    }
+
+    .btn:hover::before {
+      left: 100%;
+    }
+
+    .btn:hover {
+      transform: scale(1.08) translateY(-2px);
+      box-shadow: 0 15px 40px rgba(255, 47, 146, 0.5);
+    }
+
+    .btn:active {
+      transform: scale(1.02);
+    }
+
+    .btn-yes {
+      background: linear-gradient(135deg, #ff2f92, #ff6cab);
+      margin-bottom: 12px;
+    }
+
+    .btn-no {
+      background: linear-gradient(135deg, #9e9e9e, #757575);
+      transition: all 0.2s ease;
+    }
+
+    .progress {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin-top: 10px;
+    }
+
+    .progress-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255, 47, 146, 0.3);
+      transition: all 0.3s;
+    }
+
+    .progress-dot.active {
+      background: #ff2f92;
+      width: 24px;
+      border-radius: 4px;
+    }
+
+    .final-card {
+      background: linear-gradient(135deg, #ff2f92, #ff6cab);
+      color: white;
+      font-size: 22px;
+      padding: 45px 30px;
+      animation: finalGlow 2s ease-in-out infinite;
+    }
+
+    @keyframes finalGlow {
+      0%, 100% { box-shadow: 0 20px 60px rgba(255, 47, 146, 0.4); }
+      50% { box-shadow: 0 25px 80px rgba(255, 47, 146, 0.6); }
+    }
+
+    .hearts-decoration {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 80px;
+      opacity: 0.15;
+      animation: float 4s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes rise {
+      to { 
+        transform: translateY(-120vh) rotate(360deg); 
+        opacity: 0; 
+      }
+    }
+
+    @media (max-width: 500px) {
+      .container, .letter_ct, .txt {
+        grid-column: 3/11;
+      }
+      .letter_ct {
+        width: 90vw;
+        max-width: 350px;
+      }
+      .letter, .note {
+        width: 90vw;
+        max-width: 350px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Background Music -->
+  <audio id="bgMusic" loop>
+    <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_c8c8a73467.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- LETTER SECTION -->
+  <section id="letterSection">
+    <div class="container">
+      <h1>Хүнд Хайрт Минь</h1>
+    </div>
+    <div class="letter_ct">
+      <input type="checkbox" id="check" />
+      <label for="check">
+        <span class="letter main"></span>
+        <div class="note">
+          <p class="int">Хайрт минь,</p>
+          <p>
+            Чи миний амьдралд орж ирснээр бүх зүйл өөрчлөгдсөн.
+            <br /><br />
+            Би чамтай хамт байх цаг бүхнийг эрхэмлэдэг.
+            <br /><br />
+            Энэ бол бидний түүхийн эхлэл юм...
+          </p>
+          <p class="sign">Хайраар дүүрэн,<br />Минь хайртай хүн 💗</p>
+        </div>
+        <span class="front"></span>
+        <span class="letter flap-bg"></span>
+        <span class="letter flap"></span>
+        <span class="heart"></span>
+      </label>
+    </div>
+    <div class="txt">
+      <h3>Захидал дээр дарна уу ❤️</h3>
+    </div>
+  </section>
+
+  <!-- STORY SECTION -->
+  <section id="storySection">
+    <div class="bg"></div>
+    <div id="hearts"></div>
+    <div id="confetti"></div>
+
+    <div class="phone" id="phone">
+      <div class="hearts-decoration">💗</div>
+      
+      <div id="intro" class="intro">
+        <div class="intro-emoji">💕</div>
+        <div>Бидний Түүх</div>
+      </div>
+
+      <main id="stage"></main>
+    </div>
+  </section>
+
+  <script>
+    // Music control
+    const music = document.getElementById('bgMusic');
+    
+    // Letter section functionality
+    const checkbox = document.getElementById('check');
+    const letterSection = document.getElementById('letterSection');
+    const storySection = document.getElementById('storySection');
+
+    checkbox.addEventListener('change', function() {
+      if (this.checked) {
+        // Start music
+        music.play().catch(e => console.log('Music autoplay blocked:', e));
+        
+        // Transition to story section after 2 seconds
+        setTimeout(() => {
+          letterSection.classList.add('fade-out');
+          setTimeout(() => {
+            storySection.classList.add('active');
+            setTimeout(showScene, 3200);
+          }, 800);
+        }, 2000);
+      }
+    });
+
+    // Story section functionality
+    const story = [
+      { text: `Энэ жил чамтай уулзсан нь надад дулаахан мэдрэмж төрүүлсэн`, emoji: `🌟` },
+      { text: `Чиний инээмсэглэл энгийн атлаа сэтгэлд үлддэг юм байна.`, emoji: `🤝` },
+      { text: `Хамт өнгөрүүлсэн мөчүүд тайван, сайхан санагддаг.`, emoji: `💭` },
+      { text: `Яриа маань байнга дуусахыг хүсдэггүй.`, emoji: `✨` },
+      { text: `Чамтай байхад цаг хурдан өнгөрдөг юм шиг санагддаг.`, emoji: `🌸` },
+      { text: `Цаашдаа чамайг илүү таньж мэдэхийг хүсэж байна..`, emoji: `💗` }
+    ];
+
+    let step = 0;
+
+    function showScene() {
+      const dots = story.map((_, i) => 
+        `<div class="progress-dot ${i === step ? 'active' : ''}"></div>`
+      ).join('');
+
+      stage.innerHTML = `
+        <div class="scene">
+          <div class="card">
+            <span class="card-emoji">${story[step].emoji}</span>
+            ${story[step].text}
+          </div>
+          <button class="btn" onclick="next()">Дараах ➜</button>
+          <div class="progress">${dots}</div>
+        </div>
+      `;
+    }
+
+    function next() {
+      step++;
+      if (step < story.length) {
+        showScene();
+      } else {
+        proposal();
+      }
+    }
+
+    function proposal() {
+      stage.innerHTML = `
+        <div class="scene">
+          <div class="card">
+            <span class="card-emoji">💌</span>
+            Чи энэ түүхэнд надтай хамт үлдэх үү?
+            <br><br>
+            <button class="btn btn-yes" onclick="yes()">ТИЙМ ❤️</button>
+            <button class="btn btn-no" id="noBtn" onmouseover="escapeNo()">ҮГҮЙ 😢</button>
+          </div>
+        </div>
+      `;
+    }
+
+    function escapeNo() {
+      const btn = document.getElementById('noBtn');
+      const maxX = 100;
+      const maxY = 60;
+      const x = Math.random() * maxX - maxX/2;
+      const y = Math.random() * maxY - maxY/2;
+      btn.style.transform = `translate(${x}px, ${y}px)`;
+      btn.textContent = ['ҮГҮЙ 🏃', 'ҮГҮЙ 😅', 'ҮГҮЙ 🙈'][Math.floor(Math.random()*3)];
+    }
+
+    function yes() {
+      createHeartBurst();
+      confettiBurst();
+      
+      stage.innerHTML = `
+        <div class="scene">
+          <div class="card final-card">
+            <span class="card-emoji">💕</span>
+            Хүлээн авлаа!
+            <br><br>
+            Энэ түүх үргэлжилж байна... 🎬
+            <br><br>
+            <small style="opacity: 0.9;">Би чамайг үүрд хайрлах болно 💗</small>
+            <br><br>
+            <button class="btn" onclick="sendEmail()" style="margin-top: 20px; background: linear-gradient(135deg, #fff, #ffe8f5); color: #ff2f92; font-size: 15px;">
+              📧 Chat бичих
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    function sendEmail() {
+      const subject = encodeURIComponent('💗 Бидний Түүх - Хүлээн Авлаа!');
+      const body = encodeURIComponent(`Сайн байна уу! 💕
+
+        Би таны асуултанд "ТИЙМ" гэж хариулсан!
+
+        Бидний түүх:
+        • 2024 онд онлайнаар танилцсан
+        • Найдвар болон айдсаас болж найзууд болсон
+        • 2025 оны 3-р сарын 10-нд дахин уулзсан
+        • 2025 оны 6-р сарын 4-нд бүх зүйл өөрчлөгдсөн
+        • Мэдрэмж бодит болсон
+
+        Энэ түүх үргэлжилж байна... 🎬
+
+        Хайраар дүүрэн,
+        Таны хайрт хүн 💗`);
+
+      window.location.href =
+      `mailto:batmanlaibattsooj25@gmail.com?subject=${subject}&body=${body}`;
+    }
+
+    function confettiBurst() {
+      for (let i = 0; i < 80; i++) {
+        const c = document.createElement('div');
+        c.style.position = 'absolute';
+        c.style.left = '50%';
+        c.style.top = '50%';
+        c.style.width = '8px';
+        c.style.height = '8px';
+        c.style.borderRadius = '50%';
+        c.style.background = `hsl(${Math.random() * 60 + 320}, 90%, 60%)`;
+        c.style.transform = `translate(${Math.random() * 500 - 250}px, ${Math.random() * 500 - 250}px) rotate(${Math.random() * 360}deg)`;
+        c.style.transition = 'all 1.2s ease-out';
+        c.style.opacity = '0';
+        confetti.appendChild(c);
+        setTimeout(() => c.remove(), 1200);
+      }
+    }
+
+    function createHeartBurst() {
+      const hearts = ['💗', '💕', '💖', '💝', '💘'];
+      for (let i = 0; i < 20; i++) {
+        const h = document.createElement('div');
+        h.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+        h.style.position = 'absolute';
+        h.style.left = '50%';
+        h.style.top = '50%';
+        h.style.fontSize = (20 + Math.random() * 20) + 'px';
+        h.style.transform = `translate(${Math.random() * 300 - 150}px, ${Math.random() * 300 - 150}px)`;
+        h.style.transition = 'all 1.5s ease-out';
+        h.style.opacity = '0';
+        document.getElementById('confetti').appendChild(h);
+        setTimeout(() => h.remove(), 1500);
+      }
+    }
+
+    // 3D tilt effect
+    document.addEventListener('mousemove', (e) => {
+      if (storySection.classList.contains('active')) {
+        const x = (e.clientX / window.innerWidth - 0.5) * 12;
+        const y = (e.clientY / window.innerHeight - 0.5) * -12;
+        phone.style.transform = `translateY(-50%) rotateY(${x}deg) rotateX(${y}deg)`;
+      }
+    });
+
+    // Floating hearts
+    for (let i = 0; i < 18; i++) {
+      const h = document.createElement('div');
+      h.innerHTML = ['💗', '💕', '💖'][Math.floor(Math.random() * 3)];
+      h.style.position = 'absolute';
+      h.style.left = Math.random() * 100 + '%';
+      h.style.bottom = '-30px';
+      h.style.fontSize = (16 + Math.random() * 22) + 'px';
+      h.style.animation = `rise ${7 + Math.random() * 8}s linear infinite`;
+      h.style.animationDelay = Math.random() * 5 + 's';
+      h.style.opacity = '0.6';
+      hearts.appendChild(h);
+    }
+  </script>
+</body>
+</html>
