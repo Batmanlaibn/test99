@@ -470,6 +470,15 @@
       }
     }
 
+    .hairtai-text {
+      margin-top: 20px;
+      font-size: 18px;
+      font-family: "Courgette", cursive;
+      color: rgba(255, 255, 255, 0.95);
+      letter-spacing: 1px;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
     @media (max-width: 500px) {
       .container, .letter_ct, .txt {
         grid-column: 3/11;
@@ -635,40 +644,16 @@
         <div class="scene">
           <div class="card final-card">
             <span class="card-emoji">💕</span>
-            Хүлээн авлаа!
+            I MISS YOU
             <br><br>
-            Энэ түүх үргэлжилж байна... 🎬
+            I LOVE YOU 🎬
             <br><br>
             <small style="opacity: 0.9;">Би чамайг үүрд хайрлах болно 💗</small>
             <br><br>
-            <button class="btn" onclick="sendEmail()" style="margin-top: 20px; background: linear-gradient(135deg, #fff, #ffe8f5); color: #ff2f92; font-size: 15px;">
-              📧 Chat бичих
-            </button>
+            <div class="hairtai-text">Хайртай Шүү 💗</div>
           </div>
         </div>
       `;
-    }
-
-    function sendEmail() {
-      const subject = encodeURIComponent('💗 Бидний Түүх - Хүлээн Авлаа!');
-      const body = encodeURIComponent(`Сайн байна уу! 💕
-
-        Би таны асуултанд "ТИЙМ" гэж хариулсан!
-
-        Бидний түүх:
-        • 2024 онд онлайнаар танилцсан
-        • Найдвар болон айдсаас болж найзууд болсон
-        • 2025 оны 3-р сарын 10-нд дахин уулзсан
-        • 2025 оны 6-р сарын 4-нд бүх зүйл өөрчлөгдсөн
-        • Мэдрэмж бодит болсон
-
-        Энэ түүх үргэлжилж байна... 🎬
-
-        Хайраар дүүрэн,
-        Таны хайрт хүн 💗`);
-
-      window.location.href =
-      `mailto:batmanlaibattsooj25@gmail.com?subject=${subject}&body=${body}`;
     }
 
     function confettiBurst() {
